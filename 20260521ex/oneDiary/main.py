@@ -57,9 +57,12 @@ while flag:
     elif menuNum == config.MEMBER_DELETE:
         print('4.delete')
 
+    elif menuNum == config.SYSTEM_OUT:
+        print('5.System-out ')
+
     elif menuNum == config.MEMBER_DELETE:
         print('99.end')
-        flag = False
-        
-    elif menuNum == config.SIGN_OUT:
-        print('5.sign_out ')
+        flag = True
+
+
+
