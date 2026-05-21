@@ -249,56 +249,119 @@ increaseStart()
 메뉴: 1. 회원가입 2. 로그인 3. 특정 회원 정보 출력 4.모든 회원정보출력 99.종료
 사용자가 1. 회원가입하면 회원가입ID, 회원PW, email, 회원연락
 정보를 입력받아 회원가입 진행 하기
-2. 로그인을 하면 ID,PW 입력받아 로그인성공 또는 실패 출력
+2. 로그인을 하면 ID,PW 입력받아 로그인성공 또는 실패  
 3. 특정회원을 선택하면 ID와 PW입력받아 일치하는 회원정보를 모두 출력
 4. 가입되어있는 모든 회원 정보 출력
 99.종료
+# 인증(Authenication) / 인가(Authorization)
 - 특정회원의 ID, PW 인증되면 회원정보 수정하는 기능구현해보기
 '''
+# 회원 정보 저장 리스트
 members = []
 
 while True:
+
+    print('\n===== 회원 관리 프로그램 =====')
     print('1. 회원가입')
     print('2. 로그인')
-    print('3. 특정 회원정보')
-    print('4. 모든 회원정보')
-    print('99.종료')
+    print('3. 특정 회원 정보 출력')
+    print('4. 모든 회원 정보 출력')
+    print('99. 종료')
 
-    menu = int(input('선택: '))
+    menu = input('메뉴 선택: ')
 
-    if menu == 1:
-        memberId = (input('아이디 입력: '))
-        memberPw = (input('비밀번호 입력: '))
-        memberEm = (input('이메일아이디 입력: '))
-        memberNum = (input('연락처 입력: '))
-        
+    # 1. 회원가입
+    if menu == '1':
+
+        member_id = input('회원 ID 입력: ')
+        member_pw = input('회원 PW 입력: ')
+        member_email = input('이메일 입력: ')
+        member_phone = input('연락처 입력: ')
+
         member = {
-            'id': memberId,
-            'pw': memberPw,
-            'email': memberEm,
-            'phoneNum': memberNum
+            'id': member_id,
+            'pw': member_pw,
+            'email': member_email,
+            'phone': member_phone
         }
+
         members.append(member)
-        print(f'회원가입완료')
 
-    elif menu == 2:
-        loginId = input('ID입력: ')
-        loginPw = input('PW입력: ')
+        print('회원가입 완료!')
 
-    loginSuccess = False
+    # 2. 로그인
+    elif menu == '2':
 
-    for member in members:
+        login_id = input('ID 입력: ')
+        login_pw = input('PW 입력: ')
 
-     if member['id'] == loginId and member['pw'] == loginPw:
-        loginSuccess = True
+        login_success = False
+
+        for member in members:
+
+            if member['id'] == login_id and member['pw'] == login_pw:
+                login_success = True
+                break
+
+        if login_success:
+            print('로그인 성공!')
+        else:
+            print('로그인 실패!')
+
+    # 3. 특정 회원 정보 출력 + 수정
+    elif menu == '3':
+
+        search_id = input('ID 입력: ')
+        search_pw = input('PW 입력: ')
+
+        found = False
+
+        for member in members:
+
+            if member['id'] == search_id and member['pw'] == search_pw:
+
+                found = True
+
+                print('\n===== 회원 정보 =====')
+                print(f"ID : {member['id']}")
+                print(f"PW : {member['pw']}")
+                print(f"EMAIL : {member['email']}")
+                print(f"PHONE : {member['phone']}")
+
+                # 수정 기능
+                edit = input('\n회원정보를 수정하시겠습니까? (y/n): ')
+
+                if edit == 'y':
+
+                    member['pw'] = input('새 비밀번호 입력: ')
+                    member['email'] = input('새 이메일 입력: ')
+                    member['phone'] = input('새 연락처 입력: ')
+
+                    print('회원정보 수정 완료!')
+
+                break
+
+        if found == False:
+            print('일치하는 회원정보 없음!')
+
+    # 4. 모든 회원 정보 출력
+    elif menu == '4':
+
+        print('\n===== 전체 회원 정보 =====')
+
+        for member in members:
+
+            print('----------------')
+            print(f"ID : {member['id']}")
+            print(f"PW : {member['pw']}")
+            print(f"EMAIL : {member['email']}")
+            print(f"PHONE : {member['phone']}")
+
+    # 99. 종료
+    elif menu == '99':
+
+        print('프로그램 종료')
         break
-    
-    if loginSuccess:
-        print('로그인 성공')
-    else:
-        print('로그인 실패')
-    
-    if menu == 3:
-        loginId = input('ID입력: ')
-        loginPw = input('PW입력: ')
 
+    else:
+        print('잘못 입력했습니다.')
